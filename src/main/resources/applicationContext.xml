@@ -10,4 +10,8 @@
 	<bean id="myAspect" class="com.dark.beans.NotVeryUsefulAspect">
 		<!-- configure properties of aspect here as normal -->
 	</bean>
+	<bean id="concurrentOperationExecutor" class="com.dark.hello.spring.service.impl.ConcurrentOperationExecutor">
+		<property name="maxRetries" value ="3"></property>
+		<property name="order" value="100"></property>
+	</bean>
 </beans>
