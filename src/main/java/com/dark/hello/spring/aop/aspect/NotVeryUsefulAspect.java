@@ -1,4 +1,4 @@
-package com.dark.hello.spring.beans;
+package com.dark.hello.spring.aop.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
