@@ -7,48 +7,64 @@
 
 	<aop:aspectj-autoproxy />
 	<!-- bean definitions here -->
-	<bean id="myAspect" class="com.dark.beans.NotVeryUsefulAspect">
+	<bean id="myAspect" class="com.dark.hello.spring.aop.aspect.NotVeryUsefulAspect">
 		<!-- configure properties of aspect here as normal -->
 	</bean>
 	<bean id="beforeExample" class="com.dark.hello.spring.aop.aspect.BeforeExampleAspect"></bean>
 	<bean id="aBean" class="com.dark.hello.spring.aop.aspect.DataAccessAspect"></bean>
-	
-	<bean id="concurrentOperationExecutor" class="com.dark.hello.spring.service.impl.ConcurrentOperationExecutor">
-		<property name="maxRetries" value ="3"></property>
+
+	<bean id="concurrentOperationExecutor"
+		class="com.dark.hello.spring.service.impl.ConcurrentOperationExecutor">
+		<property name="maxRetries" value="3"></property>
 		<property name="order" value="100"></property>
 	</bean>
-	
+
+	<!-- this is the object that will be proxied by Spring's AOP infrastructure -->
+	<bean id="fooService"
+		class="com.dark.hello.spring.service.impl.DefaultFooServiceImpl"></bean>
+
+	<!-- this is the actual advice itself -->
+	<bean id="profiler" class="com.dark.hello.spring.aop.aspect.SimpleProfilerAspect" />
+
 	<aop:config>
 		<!-- Declaring a pointcut -->
-		<aop:pointcut id="dataAccessOperation" expression="execution(* com.dark.myapp.service.*.*(..))" />
-		
-		<!-- Declaring an aspect -->
-		<aop:aspect id="beforeExample" ref ="aBean">
-		<!-- Before advice -->	
-			<aop:before pointcut-ref="dataAccessOperation" method="doAccessCheck"/>
-		</aop:aspect>
-		
-		<aop:aspect id="afterReturningExample" ref="aBean">
-		<!-- After returning advice -->
-			<aop:after-returning pointvut-ref="dataAccessOperation" method="doAccessCheck" returning="retVal" />
+		<aop:pointcut id="dataAccessOperation"
+			expression="execution(* com.dark.myapp.service.*.*(..))" />
+
+		<aop:aspect ref="profiler">
+			<aop:pointcut id="getFoo"
+				expression="execution(* com.dark.hello.spring.service.FooService.getFoo(String,int)) and args(name, age)" />
+			<aop:around pointcut-ref="getFoo" method="profile" />
 		</aop:aspect>
 
-		<aop:aspect>
-		<!-- After throwing advice -->
-			<aop:after-throwing  pointcut-ref="dataAccessOperation"  method="doRecoveryActions" throwing="dataAccessEx"/>
+
+
+		<!-- Declaring an aspect -->
+		<aop:aspect id="beforeExample" ref="aBean">
+			<!-- Before advice -->
+			<aop:before pointcut-ref="dataAccessOperation" method="doAccessCheck" />
 		</aop:aspect>
-		
+
+		<aop:aspect id="afterReturningExample" ref="aBean">
+			<!-- After returning advice -->
+			<aop:after-returning pointcut-ref="dataAccessOperation"
+				method="doAccessCheck" returning="retVal" />
+		</aop:aspect>
+		<aop:aspect>
+			<!-- After throwing advice -->
+			<aop:after-throwing pointcut-ref="dataAccessOperation"
+				method="doRecoveryActions" throwing="dataAccessEx" />
+		</aop:aspect>
 		<!-- After (finally) advice -->
 		<aop:aspect id="afterFinallyExample" ref="aBean">
 			<aop:after pointcut="dataAccessOperation" method="doReleaseLock" />
 		</aop:aspect>
-		
 		<!-- Around advice -->
 		<aop:aspect id="aroundExample" ref="aBean">
-			<aop:around pointcut-ref="dataAccessOperation" method="doBasicProfiling"/>
+			<aop:around pointcut-ref="dataAccessOperation" method="doBasicProfiling" />
 		</aop:aspect>
-		
-		
+
+
 	</aop:config>
-	
+
 </beans>

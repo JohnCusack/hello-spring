@@ -22,7 +22,4 @@ public class DataAccessAspect {
         return retVal;
     }
     
-    public static void main(String[] args) {
-
-    }
 }
