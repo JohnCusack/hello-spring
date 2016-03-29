@@ -4,10 +4,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.util.StopWatch;
 
 public class SimpleProfilerAspect {
-    public Object profile(ProceedingJoinPoint pjp, String name, String age) throws Throwable {
-        StopWatch clock = new StopWatch("Profiling for '" + name + "' and '" + "'");
-        clock.start(pjp.toShortString());
+    
+    public Object profile(ProceedingJoinPoint pjp, String name, int age) throws Throwable {
+        StopWatch clock = new StopWatch("Profiling for ''" + name + "' and ''" + age +  "''");
+        
         try {
+            clock.start(pjp.toShortString());
             return pjp.proceed();
         } finally {
             clock.stop();

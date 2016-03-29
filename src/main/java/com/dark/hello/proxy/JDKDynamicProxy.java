@@ -1,11 +1,11 @@
-package com.dark.hello.spring.proxy;
+package com.dark.hello.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import com.dark.hello.spring.proxy.service.Greeting;
-import com.dark.hello.spring.proxy.service.impl.GreetingImpl;
+import com.dark.hello.proxy.service.Greeting;
+import com.dark.hello.proxy.service.impl.GreetingImpl;
 
 public class JDKDynamicProxy implements InvocationHandler {
 

@@ -1,6 +1,6 @@
-package com.dark.hello.spring.proxy.service.impl;
+package com.dark.hello.proxy.service.impl;
 
-import com.dark.hello.spring.proxy.service.Greeting;
+import com.dark.hello.proxy.service.Greeting;
 
 public class GreetingImpl implements Greeting{
 

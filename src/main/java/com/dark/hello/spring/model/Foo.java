@@ -26,4 +26,9 @@ public class Foo {
         this.age = age;
     }
 
+    @Override
+    public String toString() {
+        return "Foo [name=" + name + ", age=" + age + "]";
+    }
+
 }

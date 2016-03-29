@@ -14,8 +14,8 @@ public class DefaultFooServiceImpl implements FooService {
     }
     public static void main(String[] args) {
         BeanFactory context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        FooService foo = (FooService) context.getBean("fooService");
-        foo.getFoo("Pengo", 12);
-        System.out.println("OK");
+        FooService fooService = (FooService) context.getBean("fooService");
+        Foo foo = fooService.getFoo("Pengo", 12);
+        System.out.println(foo);
     }
 }
